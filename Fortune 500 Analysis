@@ -83,7 +83,7 @@ FROM fortune_companies
 GROUP BY company_name
 HAVING employees > 10000;
 
-#Show which companies in the healthcare industry promote a Positive, Mediocre, Poor, or Unacceptable work-life balance based on the amount of paid days off given. 
+#Show which companies in the healthcare industry promote a Positive, Mediocre, Poor, or Unacceptable work-life balance based on the amount of paid days off offered. 
 SELECT company_name,
 CASE WHEN paid_time_off_days >= 21 THEN 'Positive work-life balance'
 WHEN paid_time_off_days >= 17 THEN 'Mediocre work-life balance'
