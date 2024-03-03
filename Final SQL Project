@@ -1,0 +1,71 @@
+
+#1 Show all customers within the USA
+SELECT customerID, FirstName, LastName
+FROM chinook.customers
+WHERE Country = 'USA'
+
+#2 Show the 3 employees who have been employeed the longest 
+SELECT FirstName, LastName, HireDate
+FROM chinook.employees
+ORDER BY hiredate asc
+LIMIT 3;
+
+#3 What is the total amount spent within Berlin in 2011?
+SELECT invoicedate, billingcity, SUM(total)
+FROM chinook.invoices
+WHERE billingcity = 'Berlin'
+AND invoicedate LIKE '%2011%'
+
+#4 SELECT the employee ID, First and Last name, and contact information for all of the Sales Support Agents. Contact information should include their email address and phone number. 
+SELECT 
+employeeID
+, firstname
+, lastname
+, phone
+, email
+FROM chinook.employees
+WHERE title = 'Sales Support Agent';
+
+#5 Show all of the tracks that were composed by Chuck Berry
+SELECT name
+FROM chinook.tracks
+WHERE composer = 'Chuck Berry'
+
+#6 What was the total amount spent in Germany?
+SELECT SUM(total), billingcountry
+FROM chinook.invoices
+WHERE Billingcountry = 'Germany'
+
+#7 Show the tracks and composers within the Jazz genre
+SELECT 
+tracks.name
+, tracks.composer
+, genres.name as genre
+FROM chinook.tracks
+INNER JOIN genres
+ON genres.genreid = tracks.GenreId
+WHERE genre = 'Jazz'
+AND composer  is NOT NULL
+
+#8 Write a query that shows how many customers are in the United Kingdom
+SELECT 
+COUNT(country)
+FROM chinook.customers
+WHERE country = 'United Kingdom'
+
+#9 Write a query that shows the number of customers from each country
+SELECT country, COUNT(*) as number
+FROM chinook.customers
+GROUP BY country
+ORDER BY country
+
+#10 Write a query that calculates the total profit for each country. Then, for profit over 40, label them as "High Profit". 
+WITH total_CTE as (
+SELECT
+invoices.billingcountry, SUM(invoices.Total) as total_sales
+FROM invoices
+GROUP BY BillingCountry
+)
+SELECT BillingCountry, total_sales, "High Profit" as tag
+FROM total_CTE
+WHERE total_sales >= 40
